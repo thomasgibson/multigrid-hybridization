@@ -1,7 +1,7 @@
 from firedrake import *
 
 
-N = 4
+N = 7
 mesh = UnitSquareMesh(N**2, N**2)
 x = SpatialCoordinate(mesh)
 
@@ -38,7 +38,7 @@ L = f * v * dx
 
 w = Function(W)
 params = {'mat_type': 'matfree',
-          # 'ksp_view': None,
+          'ksp_view': None,
           'ksp_type': 'preonly',
           'pc_type': 'python',
           'pc_python_type': 'firedrake.HybridizationPC',
@@ -48,8 +48,7 @@ params = {'mat_type': 'matfree',
                             'ksp_monitor_true_residual': None,
                             'pc_type': 'python',
                             'pc_python_type': 'firedrake.GTMGPC',
-                            'gt': {'mat_type': 'aij',
-                                   'mg_levels': {'ksp_type': 'richardson',
+                            'gt': {'mg_levels': {'ksp_type': 'richardson',
                                                  'pc_type': 'bjacobi',
                                                  'sub_pc_type': 'ilu',
                                                  'ksp_max_it': 3},
