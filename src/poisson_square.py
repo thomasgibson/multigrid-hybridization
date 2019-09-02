@@ -37,9 +37,12 @@ a = (dot(sigma, tau) - div(tau)*u + v*div(sigma)) * dx
 L = f * v * dx
 
 w = Function(W)
-params = {'mat_type': 'matfree',
-          'ksp_view': None,
-          'ksp_type': 'preonly',
+params = {'ksp_type': 'preonly',
+          'ksp_max_it': 10,
+          # 'ksp_view': None,
+          # 'ksp_monitor_true_residual': None,
+          'mat_type': 'matfree',
+          'pmat_type': 'matfree',
           'pc_type': 'python',
           'pc_python_type': 'firedrake.HybridizationPC',
           'hybridization': {'ksp_type': 'cg',
@@ -48,23 +51,17 @@ params = {'mat_type': 'matfree',
                             'ksp_monitor_true_residual': None,
                             'pc_type': 'python',
                             'pc_python_type': 'firedrake.GTMGPC',
-                            'gt': {'mg_levels': {'ksp_type': 'richardson',
-                                                 'pc_type': 'bjacobi',
-                                                 'sub_pc_type': 'ilu',
-                                                 'ksp_max_it': 3},
-                                   'mg_coarse': {'ksp_type': 'cg',
-                                                 'ksp_monitor_true_residual': None,
+                            'gt': {'mg_levels': {'ksp_type': 'chebyshev',
+                                                 'pc_type': 'jacobi',
+                                                 'ksp_max_it': 4},
+                                   'mg_coarse': {'ksp_type': 'preonly',
                                                  'ksp_rtol': 1e-8,
                                                  'pc_type': 'gamg',
                                                  'mg_levels': {'ksp_type': 'chebyshev',
-                                                               'pc_type': 'bjacobi',
-                                                               'sub_pc_type': 'ilu',
+                                                               'pc_type': 'jacobi',
                                                                'ksp_max_it': 4}}}}}
 appctx = {'get_coarse_operator': p1_callback,
           'get_coarse_space': get_p1_space,
           'coarse_space_bcs': get_p1_prb_bcs()}
 
 solve(a == L, w, solver_parameters=params, appctx=appctx)
-sigma_h, u_h = w.split()
-
-File("poisson_square.pvd").write(u_h)

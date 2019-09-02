@@ -28,13 +28,16 @@ f.interpolate(-2*(x[0]-1)*x[0] - 2*(x[1]-1)*x[1])
 a = (dot(u, w)*dx - div(w)*p*dx
      + lambdar('+')*jump(w, n=n)*dS
      + div(u)*q*dx
-     + gammar('+')*jump(u, n=n)*dS)
+     # Multiply transmission equation by -1 to ensure
+     # SCPC produces the SPD operator after statically
+     # condensing
+     - gammar('+')*jump(u, n=n)*dS)
 L = q*f*dx
 s = Function(W)
 
 params = {'ksp_type': 'preonly',
           'ksp_max_it': 10,
-          'ksp_view': None,
+          # 'ksp_view': None,
           # 'ksp_monitor_true_residual': None,
           'mat_type': 'matfree',
           'pmat_type': 'matfree',
@@ -47,14 +50,15 @@ params = {'ksp_type': 'preonly',
                               'ksp_monitor_true_residual': None,
                               'pc_type': 'python',
                               'pc_python_type': 'firedrake.GTMGPC',
-                              'gt': {'mat_type': 'aij',
-                                     'mg_levels': {'ksp_type': 'richardson',
-                                                   'pc_type': 'bjacobi',
-                                                   'sub_pc_type': 'ilu',
-                                                   'ksp_max_it': 3},
+                              'gt': {'mg_levels': {'ksp_type': 'chebyshev',
+                                                   'pc_type': 'jacobi',
+                                                   'ksp_max_it': 4},
                                      'mg_coarse': {'ksp_type': 'preonly',
-                                                   'pc_type': 'lu',
-                                                   'pc_factor_mat_solver_type': 'mumps'}}}}
+                                                   'ksp_rtol': 1e-8,
+                                                   'pc_type': 'gamg',
+                                                   'mg_levels': {'ksp_type': 'chebyshev',
+                                                                 'pc_type': 'jacobi',
+                                                                 'ksp_max_it': 4}}}}}
 appctx = {'get_coarse_operator': p1_callback,
           'get_coarse_space': get_p1_space,
           'coarse_space_bcs': get_p1_prb_bcs()}
