@@ -1,0 +1,74 @@
+%%
+% middle
+\coordinate (v1) at (0, 0);
+\coordinate (v2) at (3, 0);
+\coordinate (v3) at (1.5, 3);
+
+% left
+\coordinate (v4) at (-1, 0);
+\coordinate (v5) at (0.5, 3);
+\coordinate (v6) at (-2.5, 3);
+
+% right
+\coordinate (v7) at (4, 0);
+\coordinate (v8) at (5.5, 3);
+\coordinate (v9) at (2.5, 3);
+
+% bottom
+\coordinate (v10) at (0, -1);
+\coordinate (v11) at (3, -1);
+\coordinate (v12) at (1.5, -4);
+
+\draw[fill=gray!10, dotted] (v1) -- (v2) -- (v3) -- cycle;
+\draw[fill=gray!10, dotted] (v4) -- (v5) -- (v6) -- cycle;
+\draw[fill=gray!10, dotted] (v7) -- (v8) -- (v9) -- cycle;
+\draw[fill=gray!10, dotted] (v10) -- (v11) -- (v12) -- cycle;
+
+% internal edges
+\coordinate (v14) at ($(v1)!.5!(v4)$);
+\coordinate (v35) at ($(v3)!.5!(v5)$);
+\coordinate (v110) at ($(v1)!.5!(v10)$);
+\coordinate (v211) at ($(v2)!.5!(v11)$);
+\coordinate (v27) at ($(v2)!.5!(v7)$);
+\coordinate (v39) at ($(v3)!.5!(v9)$);
+
+\draw (v14) -- (v35);
+\draw (v110) -- (v211);
+\draw (v27) -- (v39);
+
+% external edges
+\coordinate (v5e1) at (0.5, 3.5);
+\coordinate (v6e1) at (-2.5, 3.5);
+\coordinate (v6e2) at (-3, 3);
+\coordinate (v4e1) at (-1.5, 0);
+\coordinate (v9e1) at (2.5, 3.5);
+\coordinate (v8e1) at (5.5, 3.5);
+\coordinate (v8e2) at (6, 3);
+\coordinate (v7e1) at (4.5, 0);
+\coordinate (v10e1) at (-0.5, -1);
+\coordinate (v11e1) at (3.5, -1);
+\coordinate (v12e1) at (1, -4);
+\coordinate (v12e2) at (2, -4);
+
+\draw (v5e1) -- (v6e1);
+\draw (v6e2) -- (v4e1);
+\draw (v8e1) -- (v9e1);
+\draw (v8e2) -- (v7e1);
+\draw (v10e1) -- (v12e1);
+\draw (v11e1) -- (v12e2);
+
+% global trace dofs
+\coordinate (t1) at ($(v14)!.5!(v35)$);
+\coordinate (t2) at ($(v110)!.5!(v211)$);
+\coordinate (t3) at ($(v27)!.5!(v39)$);
+\coordinate (t4) at ($(v5e1)!.5!(v6e1)$);
+\coordinate (t5) at ($(v6e2)!.5!(v4e1)$);
+\coordinate (t6) at ($(v8e1)!.5!(v9e1)$);
+\coordinate (t7) at ($(v8e2)!.5!(v7e1)$);
+\coordinate (t8) at ($(v10e1)!.5!(v12e1)$);
+\coordinate (t9) at ($(v11e1)!.5!(v12e2)$);
+
+\foreach \i in {t1, t2, t3, t4, t5, t6, t7, t8, t9}
+\fill (\i) node [
+circle, fill=gray, inner sep=0pt, minimum size=7.5pt
+] {}; % Leave blank so numbers don't appear

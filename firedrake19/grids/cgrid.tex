@@ -1,0 +1,84 @@
+%%
+\coordinate (1) at (0,0,4);
+\coordinate (2) at (4,0,4);
+\coordinate (3) at (4,0,0);
+\coordinate (4) at (0,0,0);
+\coordinate (5) at (0,4,4);
+\coordinate (6) at (4,4,4);
+\coordinate (7) at (4,4,0);
+\coordinate (8) at (0,4,0);
+\coordinate (9) at (0,8,0);
+\coordinate (10) at (4,8,0);
+\coordinate (11) at (4,8,4);
+\coordinate (12) at (0,8,4);
+
+\draw (1) -- (2) -- (3) -- (7) --(6) -- (5);
+\draw[dashed] (5) -- (8) -- (7);
+\draw (1)--(5);
+\draw (2)--(6);
+\draw[dashed] (1)--(4) -- (3);
+\draw[dashed] (4)--(8);
+\draw[dashed] (5) -- (8) -- (7);
+\draw (5) -- (12) -- (11) -- (6);
+\draw (12) -- (9) -- (10) -- (11);
+\draw (10) -- (7);
+\draw[dashed] (8) -- (9);
+
+\coordinate (u11) at ($(1)!.5!(6)$);
+\coordinate (u12) at ($(4)!.5!(7)$);
+\coordinate (v11) at ($(1)!.5!(8)$);
+\coordinate (v12) at ($(2)!.5!(7)$);
+\coordinate (w00) at ($(1)!.5!(3)$);
+\coordinate (w11) at ($(5)!.5!(7)$);
+\coordinate (w22) at ($(12)!.5!(10)$);
+\coordinate (p1) at ($(1)!.5!(7)$);
+\coordinate (p2) at ($(5)!.5!(10)$);
+\coordinate (u21) at ($(5)!.5!(11)$);
+\coordinate (u22) at ($(8)!.5!(10)$);
+\coordinate (v21) at ($(5)!.5!(9)$);
+\coordinate (v22) at ($(6)!.5!(10)$);
+
+\coordinate (a1) at ($(1)!.5!(5)$);
+\coordinate (b1) at ($(4)!.5!(8)$);
+\coordinate (c1) at ($(2)!.5!(6)$);
+\coordinate (d1) at ($(3)!.5!(7)$);
+
+\coordinate (a2) at ($(5)!.5!(12)$);
+\coordinate (b2) at ($(6)!.5!(11)$);
+\coordinate (c2) at ($(7)!.5!(10)$);
+\coordinate (d2) at ($(8)!.5!(9)$);
+
+%\foreach \i in {1, ..., 12}
+%\fill (\i) node [
+%circle, inner sep=0pt, minimum size=3pt
+%] {\i};
+\draw[dashed, red] (a1)-- (b1) -- (d1) -- (c1) -- (a1);
+\draw[dashed, red] (a2)-- (b2) -- (c2) -- (d2) -- (a2);
+\draw[dashed, red] (w00) -- (w22);
+
+\foreach \i in {u11, u12, v11, v12, w00, w11, w22, u21, u22, v21, v22}
+\fill (\i) node [
+circle, fill=black, inner sep=0pt, minimum size=3pt
+] {};
+
+\foreach \i in {p1, p2}
+\fill (\i) node [
+circle, double, fill=gray, inner sep=3pt, minimum size=5pt,
+] {};
+
+\node[right=4pt] at (w00) {$w$};
+\node[right=4pt] at (w11) {$w$};
+\node[right=4pt] at (w22) {$w$};
+
+\node[left=4pt] at (p2) {$(p, \rho)$};
+\node[left=4pt] at (p1) {$(p, \rho)$};
+
+\node[left=4pt] at (v21) {$v$};
+\node[left=4pt] at (v11) {$v$};
+\node[right=4pt] at (v12) {$v$};
+\node[right=4pt] at (v22) {$v$};
+
+\node[left=4pt] at (u12) {$u$};
+\node[left=4pt] at (u22) {$u$};
+\node[right=4pt] at (u21) {$u$};
+\node[right=4pt] at (u11) {$u$};
